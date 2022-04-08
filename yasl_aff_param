@@ -1,0 +1,8 @@
+#!yasl
+
+2#!	// adds 2 to the stack then deletes 2 items
+
+# 		// add stack size to stack (say n)
+
+// pops and tests n, and if true , does n times : (prints the item, then pushes and pop and prints \n)
+%? #(print "\n" print)
