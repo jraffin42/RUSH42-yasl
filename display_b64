@@ -1,0 +1,28 @@
+#!yasl
+
+{
+	"\n"
+	print
+} nl
+
+{
+	print nl
+	1 exit
+} error_exit
+
+{
+	"0" -
+	48 +
+} to_ascii
+
+
+!!
+
+# 0 != ? ("Wrong number of arguments." error_exit)
+
+read:0
+(6:0 0:% 4:0 0:!= ? ("Bad file" error_exit))
+
+][
+#(0:to_ascii:0 )
+
