@@ -1,0 +1,35 @@
+#!yasl
+
+{
+	"\n":9
+	9:print
+} nl
+
+{
+	print nl
+	1 exit
+} error_exit
+
+{
+} skip_separator
+
+{
+	1:=:0
+	0:%==:0 ? (!! "\n":4 4:+:4) : (! 0:=:4 4:+:4 !)
+} split
+
+!!
+
+# 2 != ? ("Wrong number of arguments." error_exit)
+
+[#] 1 != ? ("Argument must be a single char" error_exit)
+0:=:1
+0:!
+
+"\n":4
+][
+#split
+4:][:5
+1:5
+5:-:5
+5:#print
