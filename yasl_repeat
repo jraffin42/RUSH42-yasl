@@ -1,0 +1,53 @@
+#!yasl
+
+{
+	"\n":9 9:print
+} nl
+
+{
+	print nl
+	1:9 9:exit
+} print_error
+
+{
+	0:[#]:9
+	9:=:9
+	9:@ (
+		1:9 9:-:9
+		9:=:0 0:]#[:8 8:=:8 8:print nl "0":8 8:=:8 8:print nl 8:<:8 8:=:8 8:print nl
+		9:=:0 0:]#[:8 8:=:8 8:print nl "9":8 8:=:8 8:print nl 8:>:8 8:=:8 8:print nl
+		8:||:8 8:?("Argument must be a number !" print_error)
+		9:=:9
+	)
+} integer_check
+
+{
+	=:9
+	9:print
+} print_cpy
+
+{
+	1:=
+	#print_cpy
+	!
+	nl
+	1:1 1:+:1
+} print_n_times
+
+!!	// deletes size and first argument
+
+# 2 < ?("Wrong number of arguments !" print_error)
+
+= 0 <= ?("Starting number must be strictly positive !" print_error)
+
+integer_check
+
+=					// duplicates N for testing
+2147483647 # - 4 +	// evaluates maximum (INT_MAX - stack_size + 4)
+> ?("Final number must be inferior or equal to 2147483647 !" print_error)
+
+~ ~:1
+
+= print nl
+
+# %? #print_n_times

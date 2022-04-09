@@ -16,7 +16,7 @@
 	1 exit
 } print_error
 
-2#!	// deletes size and first argument
+!!	// deletes size and first argument
 
 # 3 != ?("Wrong number of arguments !" print_error)
 

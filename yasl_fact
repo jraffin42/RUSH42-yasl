@@ -1,0 +1,27 @@
+#!yasl
+
+{
+	"\n":9 9:print
+} nl
+
+{
+	print nl
+	1:9 9:exit
+} print_error
+
+{
+	=:9
+	9:print
+} print_cpy
+
+{
+	= 0 ==?(! 1):(= 1 - fact *)
+} fact
+
+!!	// deletes size and first argument
+
+# 1 != ?("Wrong number of arguments !" print_error)
+
+= 0 < ?("Argument must be a number >= 0 !" print_error)
+
+fact print nl

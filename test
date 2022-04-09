@@ -1,0 +1,11 @@
+#!yasl
+
+{
+	"\n":9 9:print
+} nl
+
+!!	// deletes size and first argument
+
+[#] print nl
+
+# %? #(print nl)

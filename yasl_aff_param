@@ -1,14 +1,13 @@
 #!yasl
 
+// pop and prints the first stack element, then pushes a new line before popping and printing it
 {
 	print
 	"\n"
 	print
 } print_nl
 
-2#!	// adds 2 to the stack then deletes 2 items
+!!	// deletes size and first argument
 
-# 	// add stack size to stack (say n)
-
-// pops and tests n, and if true , does n times : (prints the item, then pushes and pop and prints \n)
-%? #print_nl
+// if stack size n is true (>0), does n times the printing followed by a new line.
+# %? #print_nl
