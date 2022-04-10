@@ -132,7 +132,7 @@
 6:#:6
 get_square
 0:=:2
-~~ ? ("error" error_exit)
+~~ ? ("Image is not a square" error_exit)
 print_header
 6:!
 2:=:0
