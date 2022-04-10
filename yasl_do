@@ -1,18 +1,17 @@
 #!yasl
 
 {
-	print
 	"\n"
 	print
-} print_nl
+} nl
 
 {
-	print_nl
+	print nl
 	0 exit
 } print_exit
 
 {
-	print_nl
+	print nl
 	1 exit
 } print_error
 
@@ -26,16 +25,7 @@ eval
 eval
 # ^
 
-"+" %== ?(!! + print_exit) : !
-"-" %== ?(!! - print_exit) : !
-"*" %== ?(!! * print_exit) : !
-"/" %== ?(!! / print_exit) : !
-"%" %== ?(!! % print_exit) : !
-"<" %== ?(!! < print_exit) : !
-">" %== ?(!! > print_exit) : !
-"<=" %== ?(!! <= print_exit) : !
-">=" %== ?(!! >= print_exit) : !
-"==" %== ?(!! == print_exit) : !
-"!=" %== ?(!! != print_exit) : !
+// concatenate operator with a space before evaluing it
+" " + eval
 
-"Wrong operator !" print_error
+print nl
