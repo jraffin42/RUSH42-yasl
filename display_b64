@@ -7,7 +7,7 @@
 
 {
 	print nl
-	1:0 exit
+	1 exit
 } error_exit
 
 {
@@ -55,14 +55,12 @@
 		9:]#[:7
 		7:=:7
 		0:=:7
-		7:==:8 ? (0:8) : (1:8 1:1 1:+:1)
+		7:%==:8 ? (0:8) : (1:8 1:1 1:+:1)
+		9:[#]:1
+		1:%==:8 ? (! "Character not in base":0 0:error_exit) : 1:!
 		8:=:8
 	)
 } decode
-
-{
-	
-} get_square
 
 {
 	2:=:0
@@ -73,6 +71,26 @@
 	#(print print nl)
 } print_header
 
+{
+    = ? (
+        25:2
+        =:1
+        2:= @ (
+            1:=:2 =:2 2:/:2
+            =:2 ! 2:+ 2 /
+            1:2 2:-:2 2:=
+        )
+        1:! 2:!
+    )
+} isqrt
+
+{
+	6:= isqrt
+	= = *
+	6:= != ? (! 0)
+} get_square
+
+
 !!
 
 # 0 != ? ("Wrong number of arguments." error_exit)
@@ -82,7 +100,7 @@
 (
 	read:2
 	0:2
-	2:>:1										// !(nb_char_read > 0) ? break ;
+	2:>:1										// !nb_char_read > 0 ? break ;
 )
 2:#:0											// number of read
 #(2:=:1 2:!)									// split lists from 2 to 0
@@ -91,7 +109,7 @@
 #
 (4:0 0:% 0:0 0:!= ? ("Bad file" error_exit))	// total_len % 4 ?
 
-"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/":9
+"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/ ":9
 
 #
 4:0
@@ -113,6 +131,8 @@
 
 6:#:6
 get_square
+0:=:2
+~~ ? ("error" error_exit)
 print_header
 6:!
 2:=:0
