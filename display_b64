@@ -106,6 +106,9 @@
 #(2:=:1 2:!)									// split lists from 2 to 0
 1:#:0
 #(1:][:0 !)
+
+#
+~~ ? ("Empty file" error_exit)
 #
 (4:0 0:% 0:0 0:!= ? ("Bad file" error_exit))	// total_len % 4 ?
 
