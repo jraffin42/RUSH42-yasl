@@ -45,7 +45,7 @@
 
 	//	if a zero was found and there is no other digit, put it to stack 6, or else put an empty string.
 	"":6
-	7:= ? ( 8:# ? (8:= isdigit ~~ ? ("0":6 6:+:6) ! ))
+	7:= ? ( 8:# ~~ ? ("0":6 6:+:6) : (8:= isdigit ~~ ? ("0":6 6:+:6) ! ))
 	7:!
 
 	// append rest of digits to new element of stack 6

@@ -26,7 +26,7 @@
 
 //	stacks :: 8:chars 7:tests 6:final_number
 {
-	%][ %? #(=:8 !) : !		// explode and copy items to iterate on stack 8
+	%][ %? #(=:8 !) : !		// explode and move items to iterate on stack 8
 
 	//	delete leading whitespaces
 	8:#:8 8:@:8 (
@@ -45,7 +45,7 @@
 
 	//	if a zero was found and there is no other digit, put it to stack 6, or else put an empty string.
 	"":6
-	7:= ? ( 8:# ? (8:= isdigit ~~ ? ("0":6 6:+:6) ! ))
+	7:= ? ( 8:# ~~ ? ("0":6 6:+:6) : (8:= isdigit ~~ ? ("0":6 6:+:6) ! ))
 	7:!
 
 	// append rest of digits to new element of stack 6
