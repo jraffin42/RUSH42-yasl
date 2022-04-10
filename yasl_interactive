@@ -1,8 +1,7 @@
 #!yasl
 
 {
-	"\n":9
-	9:print
+	"\n" print
 } nl
 
 {
@@ -14,11 +13,8 @@
 
 # 0 != ? ("Wrong number of arguments." error_exit)
 
-1:9
-9:@
-(
-	read:0
-	0:!
-	0:eval
-	1:9
+read
+@ (
+	eval
+	read
 )
