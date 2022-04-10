@@ -13,15 +13,15 @@
 {
 	"0" -
 	48 +
-} to_ascii
+} to_ascii				// cast a char to int
 
 {
 	"\e[48;2;":5
 	";":3
 	1:=:2
-	16:2
-	2:>>:3
-	"m ":3
+	255:2
+	2:&:3
+	"m  ":3
 	3:+:3
 	3:+:3
 	2:!
@@ -36,8 +36,8 @@
 	4:+:4
 	2:!
 	1:=:5
-	255:5
-	5:&:5
+	16:5
+	5:>>:5
 	4:=:5
 	5:+:5
 	5:+:5
@@ -60,16 +60,49 @@
 	)
 } decode
 
+{
+	0:5 6:=:7 2:7 7:/:7					//	5 = borne_inf / 7 = borne sup
+	(5:=:8 7:=:8 8:%<=:1)				//	borne_inf <= borne_sup
+	1:@
+	(
+		5:=:9 7:=:9 9:+:9 2:9 9:/:9		//	9 = sqrt = (borne_inf + borne_sup) / 2
+		9:=:0 9:=:0 0:*:0				//	0 = n = sqrt * sqrt
+		6:=:0
+		0:%<:1 ? (9:=:5 1:5 5:+:5)		// (n < nb) ? borne_inf = sqrt + 1
+		0:%>:1 ? (1:7 7:-:7)			// (n > nb) ? borne_sup = sqrt - 1
+		0:==:1 ? (9:=:2 0:1) : (8:%<=:1)
+	)
+	0:2 2:%> ? (2:!) : (0:2)
+} get_square
+
+{
+	2:=:0
+	"Found square : "
+	6:=:0
+	"Image received, nb pixel : "
+	2:0
+	#(print print nl)
+} print_header
+
 !!
 
 # 0 != ? ("Wrong number of arguments." error_exit)
 
-read:0
-(4:0 0:% 0:0 0:!= ? ("Bad file" error_exit))
+1:1
+1:@
+(
+	read:2
+	0:2
+	2:>:1										// !(nb_char_read > 0) ? break ;
+)
+2:#:0											// number of read
+#(2:][:0 !)										// split lists from 2 to 0
+#
+(4:0 0:% 0:0 0:!= ? ("Bad file" error_exit))	// total_len % 4 ?
 
 "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/":9
 
-][
+#
 4:0
 0:/
 #(
@@ -88,4 +121,11 @@ read:0
 )
 
 6:#:6
-6:#print
+get_square
+print_header
+2:=:0
+#(
+	2:=:6
+	6:#print
+	nl
+)
