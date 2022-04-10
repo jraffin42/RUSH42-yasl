@@ -1,35 +1,44 @@
 #!yasl
 
 {
-	"\n":9
-	9:print
+	"\n":9 9:print
 } nl
 
 {
 	print nl
-	1 exit
-} error_exit
+	1:9 9:exit
+} print_error
 
 {
-} skip_separator
+	=:1 !					//	saves separator
+	][ %? #(=:8 !) : !		//	explode and move items to iterate on stack 8
 
-{
-	1:=:0
-	0:%==:0 ? (!! "\n":4 4:+:4) : (! 0:=:4 4:+:4 !)
+	"":6					//	Initialize word cache
+
+	// loop
+	8:# @ (
+		8:= 1:= != ? (		//	if char is separator
+			8:=:6 6:+:6		//	we concatenate to current word in 6
+		) : (
+			6:[#] ?	"":6	//	else if there is a non-empty word in cache, we push it down
+		)
+		8:! 8:#				//	remove item and loop
+	)
+
+	// revert word cache in 0
+	6:# @ (
+		6:[#] ? (6:=)
+		6:! 6:#
+	)
+
 } split
 
 !!
 
-# 2 != ? ("Wrong number of arguments." error_exit)
+# 2 != ? ("Wrong number of arguments" print_error)
 
-[#] 1 != ? ("Argument must be a single char" error_exit)
-0:=:1
-0:!
+[#] 1 != ? ("First argument must be a single character" print_error)
 
-"\n":4
-][
-#split
-4:][:5
-1:5
-5:-:5
-5:#print
+split
+
+# %? #(print nl)
