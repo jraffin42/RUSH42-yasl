@@ -10,16 +10,69 @@
 } print_error
 
 {
-	0:[#]:9
-	9:=:9
-	9:@ (
-		1:9 9:-:9
-		9:=:0 0:]#[:8 8:=:8 8:print nl "0":8 8:=:8 8:print nl 8:<:8 8:=:8 8:print nl
-		9:=:0 0:]#[:8 8:=:8 8:print nl "9":8 8:=:8 8:print nl 8:>:8 8:=:8 8:print nl
-		8:||:8 8:?("Argument must be a number !" print_error)
-		9:=:9
+	= " " ==:7
+	= "\f" ==:7		7:||:7
+	= "\n" ==:7 	7:||:7
+	= "\r" ==:7 	7:||:7
+	= "\t" ==:7 	7:||:7
+	= "\v" ==:7 	7:||
+} isspace
+
+{
+	= "0" >=:7
+	= "9" <=:7
+	7:&&
+} isdigit
+
+//	stacks :: 8:chars 7:tests 6:final_number
+{
+	%][ %? #(=:8 !) : !		// explode and move items to iterate on stack 8
+
+	//	delete leading whitespaces
+	8:#:8 8:@:8 (
+		isspace ? (	! # ) : 0
 	)
-} integer_check
+
+	//	put sign into stack 6 or empty string if absent
+	8:# ? ( 8:= "+" ==:7	8:= "-" ==:7	7:||:7 ) : 0:7
+	7:? (8:=:6 8:!) : ("":6)
+
+	//	delete leading zeros (detecting if at least one is found)
+	0:7
+	8:#:8 8:@:8 (
+		= "0" == ? ( ! # 1:7 7:||:7 ) : 0
+	)
+
+	//	if a zero was found and there is no other digit, put it to stack 6, or else put an empty string.
+	"":6
+	7:= ? ( 8:# ? (8:= isdigit ~~ ? ("0":6 6:+:6) ! ))
+	7:!
+
+	// append rest of digits to new element of stack 6
+	8:#:8 8:@:8 (
+		isdigit ? ( =:6 ! 6:+:6 # ) : 0
+	)
+
+	//	delete trailing whitespaces
+	8:#:8 8:@:8 (
+		isspace ? (	! # ) : 0
+	)
+
+	6:[#]:7			//	there is digits
+	8:#:7 7:~~:7	//	all the string is processed
+	7:&&:7			//	&& the above
+
+	6:+:6				//	adds sign to digits
+
+	7:= ? (! 6:= 0 + 6:!)	//	replace number if no error
+	7:= ~~					//	returns 1 if error
+} format_number_err
+
+{
+	= "0" >=:7
+	= "9" <=:7
+	7:&&
+} isdigit
 
 {
 	=:9
@@ -27,27 +80,23 @@
 } print_cpy
 
 {
-	1:=
+	=:1
 	#print_cpy
 	!
 	nl
-	1:1 1:+:1
+	1:1 1:+
 } print_n_times
 
 !!	// deletes size and first argument
 
-# 2 < ?("Wrong number of arguments !" print_error)
+//	# 2 < ?("Wrong number of arguments !" print_error)
 
-= 0 <= ?("Starting number must be strictly positive !" print_error)
+format_number_err ? ("First argument is not a valid integer !" print_error)
 
-integer_check
+= 0 <= ?("First argument must be strictly positive !" print_error)
 
 =					// duplicates N for testing
 2147483647 # - 4 +	// evaluates maximum (INT_MAX - stack_size + 4)
-> ?("Final number must be inferior or equal to 2147483647 !" print_error)
-
-~ ~:1
-
-= print nl
+> ? ("Final number (after all increments) must be inferior or equal to 2147483647 !" print_error)
 
 # %? #print_n_times
